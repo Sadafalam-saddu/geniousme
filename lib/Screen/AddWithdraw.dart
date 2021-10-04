@@ -75,7 +75,7 @@ class _AddWithdrawState extends State<AddWithdraw> with TickerProviderStateMixin
                 children: [
                   TextSpan(
                     style: Theme.of(context).textTheme.headline1.copyWith(color: Themes.Green),
-                    text: '${isVendor ? userDashboard.data.user.affilateIncome : userDashboard.data.affilateIncome}'
+                    text: '${/*isVendor ? userDashboard.data.user.affilateIncome :*/ userDashboard.data.affilateIncome}'
                   )
                 ]
               ),

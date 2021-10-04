@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_facebook_login/flutter_facebook_login.dart';
+import 'package:flutter_login_facebook/flutter_login_facebook.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:keyboard_actions/keyboard_actions_config.dart';
 import 'package:geniouscart/Class/Auth.dart';
@@ -135,32 +135,56 @@ class AuthenticationProvider with ChangeNotifier{
       notifyListeners();
   }
   void initiateFacebookLogin() async {
-    var facebookLoginResult =await facebookLogin.logIn(['email']);
-    print(facebookLoginResult.errorMessage);
+    var facebookLoginResult =await facebookLogin.logIn(permissions: [
+      FacebookPermission.publicProfile,
+      FacebookPermission.email,
+    ]);
     switch (facebookLoginResult.status) {
-      case FacebookLoginStatus.error:
-        onLoginStatusChanged(false);
-        break;
-      case FacebookLoginStatus.cancelledByUser:
-        onLoginStatusChanged(false);
-        break;
-      case FacebookLoginStatus.loggedIn:
+      case FacebookLoginStatus.success:
+      /*// Logged in
+
+      // Send access token to server for validation and auth
+        final FacebookAccessToken accessToken = facebookLoginResult.accessToken;
+        print('Access token: ${accessToken.token}');
+
+        // Get profile data
+        final profile = await facebookLogin.getUserProfile();
+        print('Hello, ${profile.name}! You ID: ${profile.userId}');
+
+        // Get user profile image url
+        final imageUrl = await facebookLogin.getProfileImageUrl(width: 100);
+        print('Your profile image: $imageUrl');
+
+        // Get email (since we request email permission)
+        final email = await facebookLogin.getUserEmail();
+        // But user can decline permission
+        if (email != null)
+          print('And your email is $email');*/
+
         facebookLoading=true;
         notifyListeners();
         var graphResponse = await Api_Client.SimpleRequest(url: 'https://graph.facebook.com/v2.12/me?fields=name,first_name,last_name,email,picture.height(200)&access_token=${facebookLoginResult
             .accessToken.token}');
-         try{
-           FacebookResponse data=FacebookResponse.fromJson(graphResponse);
-           onLoginStatusChanged(true, profileData: data);
-           getToken(URL.Social_Login, body: {
-             AppConstant.name:data.name,
-             AppConstant.email:data.email,
-           });
-         }catch(e){
-           facebookLoading=false;
-           notifyListeners();
-           ErrorMessage(context,message: language.Something_went_wrong);
-         }
+        try{
+          FacebookResponse data=FacebookResponse.fromJson(graphResponse);
+          onLoginStatusChanged(true, profileData: data);
+          getToken(URL.Social_Login, body: {
+            AppConstant.name:data.name,
+            AppConstant.email:data.email,
+          });
+        }catch(e){
+          facebookLoading=false;
+          notifyListeners();
+          ErrorMessage(context,message: language.Something_went_wrong);
+        }
+
+        break;
+      case FacebookLoginStatus.cancel:
+        onLoginStatusChanged(false);
+        break;
+      case FacebookLoginStatus.error:
+        onLoginStatusChanged(false);
+        print('Error while log in: ${facebookLoginResult.error}');
         break;
     }
   }

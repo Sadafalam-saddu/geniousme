@@ -31,12 +31,12 @@ class AccountProvider with ChangeNotifier{
       name: language.Account_Sections[1],
       icon: CustomIcon.MyFlutterApp.purchased_items,
       route: PURCHASED_ITEMS
-    ),*/
+    ),
     Section(
         name: language.Account_Sections[2],
         icon: CustomIcon.MyFlutterApp.diposit2,
         route: DEPOSIT
-    ),
+    ),*/
     Section(
         name: language.Account_Sections[11],
         icon: CustomIcon.MyFlutterApp.withdraws,
@@ -136,9 +136,9 @@ class AccountProvider with ChangeNotifier{
   }
   Future getDashBoard()async{
     await ApiClient2.Request(context,
-        url: isVendor ? URL.Vendor_Dashboard : URL.User_Dashboard,
+        url: /*isVendor ? URL.Vendor_Dashboard :*/ URL.User_Dashboard,
         onSuccess: (data){
-          userDashboard= isVendor ? VendorDashboard.fromJson(data) : UserDashboard.fromJson(data);
+          userDashboard= /*isVendor ? VendorDashboard.fromJson(data) :*/ UserDashboard.fromJson(data);
         },
         onError: (data){
         }
@@ -152,7 +152,7 @@ class AccountProvider with ChangeNotifier{
     Loading=true;
     notifyListeners();
     await ApiClient2.Request(context,
-        url: isVendor ? URL.VendorDetails : URL.GetUser,
+        url: /*isVendor ? URL.VendorDetails :*/ URL.GetUser,
         onSuccess: (data){
           String code =user.affilateLink;
           user=User.fromJson(data[AppConstant.data]);
