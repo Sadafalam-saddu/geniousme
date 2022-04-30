@@ -9,7 +9,7 @@ import '../main.dart';
 class AppConstant {
   static String AppName = 'geniouscart';
   static String font_poppins = "Poppins";
-  static String currencySymbol = "\$";
+  static String currencySymbol = "\₹";
   static String Share_Auth = 'auth';
   static String Share_User = 'user';
   static String Share_Product = 'product';
