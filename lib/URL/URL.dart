@@ -1,7 +1,7 @@
 import 'package:geniouscart/URL/AppConstant.dart';
 
 class URL {
-  static String Main_Url = 'https://dev.geniusocean.net/genius_to_king/';
+  static String Main_Url = 'https://dreamever.in/';
   static String device_type = 'ANDROID';
   static String map_api_key = 'AIzaSyBufiH5tq54UvegWnoqKt0WzLMRXckO6f4';
 

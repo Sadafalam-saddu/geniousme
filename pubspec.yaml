@@ -8,6 +8,9 @@ version: 1.0.0+1
 environment:
   sdk: ">=2.7.0 <3.0.0"
 
+flutter_icons:
+  android: true
+  image_path: "assets/images/logo.png"
 dependencies:
   flutter:
     sdk: flutter
@@ -65,7 +68,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+  change_app_package_name: ^1.0.0
+  flutter_launcher_icons:  ^0.9.2
 
 flutter:
   uses-material-design: true
@@ -73,7 +77,6 @@ flutter:
   assets:
     - assets/images/
     - assets/process_timeline/
-
 
   fonts:
     - family: Poppins
